@@ -62,7 +62,7 @@ class Network(object):
             else:
                 print "Epoch {0} complete".format(j)
 
-    # 计算每一组的梯度，并更新weights和
+    # 计算一组的梯度，取该组梯度的平均值乘以学习率，更新w和b
     def update_mini_batch(self, mini_batch, eta):
 
         # 初始化该组w和b的梯度矩阵，与w和b的结构保持一致
@@ -76,7 +76,7 @@ class Network(object):
             nabla_b = [nb + dnb for nb, dnb in zip(nabla_b, delta_nabla_b)]
             nabla_w = [nw + dnw for nw, dnw in zip(nabla_w, delta_nabla_w)]
 
-        # 修正w和b，修正量为该组梯度的平均值
+        # 修正w和b，修正量为该组梯度的平均值乘以eta
         self.biases = [b - (eta * nb / len(mini_batch)) for b, nb in zip(self.biases, nabla_b)]
         self.weights = [w - (eta * nw / len(mini_batch)) for w, nw in zip(self.weights, nabla_w)]
 
