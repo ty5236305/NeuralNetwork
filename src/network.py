@@ -92,15 +92,15 @@ class Network(object):
         # 所有层的激活输出，初始值只包含样本输入
         activations = [x]
 
-        #所有层的加权输入
+        # 所有层的加权输入
         zs = []
 
         # 先前向计算神经网络，遍历每一层
         for b, w in zip(self.biases, self.weights):
-            #计算加权输入
+            # 计算加权输入
             z = np.dot(w, activation) + b
             zs.append(z)
-            #计算激活输出
+            # 计算激活输出
             activation = self.sigmoid(z)
             activations.append(activation)
         # 计算最后一层的误差delta，即代价函数关于加权输入的导数
@@ -108,10 +108,10 @@ class Network(object):
         delta = self.cost_derivative(activations[-1], y) * self.sigmoid_prime(zs[-1])
         # 偏移的梯度等于误差，
         nabla_b[-1] = delta
-        #权重的梯度等于前一层输出 点乘 当前层的误差
+        # 权重的梯度等于前一层输出 点乘 当前层的误差
         nabla_w[-1] = np.dot(delta, activations[-2].transpose())
 
-        #从倒数第二层开始向前逐层计算每层的误差
+        # 从倒数第二层开始向前逐层计算每层的误差
         for l in xrange(2, self.num_layers):
             # 当前层的误差等于后一层的权重 点乘 后一层的误差 * 当前层激活函数关于加权输入的导数
             delta = np.dot(self.weights[-l+1].transpose(), delta) * self.sigmoid_prime(zs[-l])
