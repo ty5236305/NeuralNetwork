@@ -104,7 +104,7 @@ class Network(object):
             activation = self.sigmoid(z)
             activations.append(activation)
         # 计算最后一层的误差delta，即代价函数关于加权输入的导数
-        # 根据链式法则，等价于代价函数关于输出的导数*激活函数关于加权输入的导数
+        # 根据链式法则，delta等价于代价函数关于输出的导数*激活函数关于加权输入的导数
         delta = self.cost_derivative(activations[-1], y) * self.sigmoid_prime(zs[-1])
         # 偏移的梯度等于误差，
         nabla_b[-1] = delta
